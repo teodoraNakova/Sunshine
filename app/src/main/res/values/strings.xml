@@ -25,6 +25,10 @@
     <string name="app_name">Sunshine</string>
 
     <string name="refresh_button_title">Refresh</string>
+
+    <string name="error_message">
+        An error has occurred. Please try again by clicking REFRESH
+    </string>
     <!-- - - - - - - - - - - - - -->
     <!--Used by SunshineDateUtils-->
     <!-- - - - - - - - - - - - - -->
