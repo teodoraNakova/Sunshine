@@ -1,11 +1,13 @@
 package com.example.android.sunshine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
     private static final String OPEN_WEATHER_MAP_ID = "b1cb402e847693925541f472bf375126";
+    private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private ForecastAdapter mForecastAdapter;
     private TextView mErrorMessageDisplay;
@@ -63,6 +66,21 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
+    private void openLocationInMap() {
+        String addressString = "1600 Ampitheatre Parkway, CA";
+        Uri geoLocation = Uri.parse("geo:0,0?q=" + addressString);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.d(TAG, "Couldn't call " + geoLocation.toString()
+                    + ", no receiving apps installed!");
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -72,9 +90,15 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
             mForecastAdapter.setWeatherData(null);
             loadWeatherData();
+            return true;
+        }
+
+        if (id == R.id.action_map) {
+            openLocationInMap();
             return true;
         }
 

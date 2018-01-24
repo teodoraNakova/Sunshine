@@ -25,6 +25,8 @@
     <string name="app_name">Sunshine</string>
 
     <string name="refresh_button_title">Refresh</string>
+    <string name="action_map">Map Location</string>
+    <string name="action_share">Share</string>
 
     <string name="error_message">
         An error has occurred. Please try again by clicking REFRESH
