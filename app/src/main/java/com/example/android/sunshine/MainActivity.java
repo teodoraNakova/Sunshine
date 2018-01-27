@@ -112,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements
             return true;
         }
 
+        if(id == R.id.action_settings) {
+            Intent settingsActivityIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsActivityIntent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
