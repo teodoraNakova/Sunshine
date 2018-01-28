@@ -4,9 +4,12 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.example.android.sunshine.utilities.SunshineDateUtils;
 
 public class WeatherProvider extends ContentProvider{
 
@@ -50,7 +53,7 @@ public class WeatherProvider extends ContentProvider{
                          * Passing null will return all columns of data within the Cursor.
                          * However, if you don't need all the data from the table, it's best
                          * practice to limit the columns returned in the Cursor with a projection.
-                         */throw new RuntimeException("We are not implementing update in Sunshine");
+                         */
                         projection,
                         /*
                          * The URI that matches CODE_WEATHER_WITH_DATE contains a date at the end
@@ -88,6 +91,44 @@ public class WeatherProvider extends ContentProvider{
         }
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
+    }
+
+    @Override
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        switch (sUriMatcher.match(uri)) {
+
+            case CODE_WEATHER:
+                db.beginTransaction();
+                int rowsInserted = 0;
+                try {
+                    for (ContentValues value : values) {
+                        long weatherDate =
+                                value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
+                        if (!SunshineDateUtils.isDateNormalized(weatherDate)) {
+                            throw new IllegalArgumentException("Date must be normalized to insert");
+                        }
+
+                        long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            rowsInserted++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                if (rowsInserted > 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+
+                return rowsInserted;
+
+            default:
+                return super.bulkInsert(uri, values);
+        }
     }
 
     @Override
