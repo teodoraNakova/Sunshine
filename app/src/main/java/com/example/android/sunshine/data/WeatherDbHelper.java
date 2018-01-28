@@ -3,6 +3,7 @@ package com.example.android.sunshine.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.android.sunshine.data.WeatherContract.WeatherEntry;
 
 public class WeatherDbHelper extends SQLiteOpenHelper{
@@ -10,8 +11,8 @@ public class WeatherDbHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "weather.db";
     private static final int DATABASE_VERSION = 4;
 
-    public WeatherDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public WeatherDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
