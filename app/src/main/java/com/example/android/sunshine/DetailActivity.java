@@ -36,6 +36,7 @@ public class DetailActivity extends AppCompatActivity {
                 .setType("text/plain")
                 .setText(mForecast + FORECAST_SHARE_HASHTAG)
                 .getIntent();
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         return shareIntent;
     }
 
