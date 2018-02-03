@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 
 import com.example.android.sunshine.data.SunshinePreferences;
 import com.example.android.sunshine.data.WeatherContract;
-import com.example.android.sunshine.utilities.FakeDataUtils;
+import com.example.android.sunshine.sync.SunshineSyncUtils;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setElevation(0f);
 
 
-
-        FakeDataUtils.insertFakeData(this);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
 
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
@@ -77,10 +74,9 @@ public class MainActivity extends AppCompatActivity implements
 
         showLoading();
 
-
-
-
         getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
+
+        SunshineSyncUtils.initialize(this);
 
 
 
