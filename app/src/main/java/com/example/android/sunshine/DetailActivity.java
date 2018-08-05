@@ -52,6 +52,8 @@ public class DetailActivity extends AppCompatActivity
 
     private ActivityDetailBinding mDetailBinding;
 
+    private int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
