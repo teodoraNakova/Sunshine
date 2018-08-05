@@ -160,6 +160,7 @@ public class DetailActivity extends AppCompatActivity
 
         mDetailBinding.extraDetails.windLabel.setContentDescription(windA11y);
 
+        test
 
         /************
          * Pressure *
