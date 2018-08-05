@@ -158,7 +158,7 @@ public class DetailActivity extends AppCompatActivity
         mDetailBinding.extraDetails.windMeasurement.setText(windString);
         mDetailBinding.extraDetails.windMeasurement.setContentDescription(windA11y);
 
-        mDetailBinding.extraDetails.windLabel.setContentDescription(windA11y);
+        mDetailBinding.extraDetails.windMeasurement.setContentDescription(windA11y);
 
         /************
          * Pressure *
